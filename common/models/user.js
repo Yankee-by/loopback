@@ -121,6 +121,9 @@ module.exports = function(User) {
       tokenData = {};
     }
 
+    if (options && options.extraProperties && typeof options.extraProperties === 'object')
+      tokenData = Object.assign({}, tokenData, {...options.extraProperties});
+
     var userSettings = this.constructor.settings;
     tokenData.ttl = Math.min(tokenData.ttl || userSettings.ttl, userSettings.maxTTL);
     this.accessTokens.create(tokenData, options, cb);
